@@ -36,7 +36,7 @@ module Devise
           end
 
           # extra validations
-          validates :email,    :email  => email_validation if email_validation # use rails_email_validator or similar
+          #validates :email,    :email  => email_validation if email_validation # use rails_email_validator or similar
           validates :password, :format => { :with => password_regex, :message => :password_format }, :if => :password_required?
 
           # don't allow use same password
@@ -63,7 +63,7 @@ module Devise
       # Passwords are always required if it's a new record, or if the password
       # or confirmation are being set somewhere.
       def password_required?
-        !persisted? || !password.nil? || !password_confirmation.nil?
+        !persisted? || !password.nil? || !password_confirmation.nil? || need_change_password?
       end
 
       def email_required?
@@ -76,7 +76,7 @@ module Devise
       private
         def has_uniqueness_validation_of_login?
           validators.any? do |validator|
-            validator.kind_of?(ActiveRecord::Validations::UniquenessValidator) &&
+            validator.class.name =~ (/::Validations::UniquenessValidator$/) &&
               validator.attributes.include?(login_attribute)
           end
         end
