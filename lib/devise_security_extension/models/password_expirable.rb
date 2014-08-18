@@ -13,7 +13,7 @@ module Devise
 
       # is an password change required?
       def need_change_password?
-        return false if self.has_attribute?('password_expiry') and !self.password_change
+        return false if self.has_attribute?('password_expiry') and !self.password_expiry
         if self.class.expire_password_after.is_a? Fixnum or self.class.expire_password_after.is_a? Float
           self.password_changed_at.nil? or self.password_changed_at < self.class.expire_password_after.ago
         else
