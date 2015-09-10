@@ -8,5 +8,5 @@ class OldPassword
   field :password_archivable_type, :type => String
 
   belongs_to :password_archivable, :polymorphic => true
-  attr_accessible :encrypted_password
+  #attr_accessible :encrypted_password
 end
